@@ -1,0 +1,18 @@
+- name: Create VPC
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: no
+  vars:
+    stackname
+    ec2_region
+  cloudformation:
+    stack_name: "{{ stackname }}"
+    state: "present"
+    region: "{{ ec2_region }}"
+    disable_rollback: true
+    template: "files/cfn-vpc.json"
+    template_parameters:
+      WorkShop: "{{ stackname }}"
+  register: vpc
+
